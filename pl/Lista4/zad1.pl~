@@ -1,0 +1,19 @@
+% base case: a single number is an expression
+expr([N], N).
+
+% recursive case: split the list and combine the expressions with an operator
+expr(L, E) :-
+    append(L1, L2, L), % split the list
+    L1 \= [], L2 \= [], % neither part should be empty
+    expr(L1, E1), % generate expressions for the parts
+    expr(L2, E2),
+    member(Op, [+,-,*]), % choose an operator
+    E =.. [Op, E1, E2]. % combine the expressions with the operator
+
+
+% find all expressions that evaluate to a given number
+wyrazenie(L, X, E) :-
+    expr(L, E), % generate an expression
+    X is E. % it should evaluate to the given number
+
+
