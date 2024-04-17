@@ -1,8 +1,0 @@
-srodkowy(L,X) :-
-    append(L1,[X|L2],L),
-    length(L1,l),
-    length(L2,l).
-
-
-
-
