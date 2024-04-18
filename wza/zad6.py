@@ -12,7 +12,6 @@ class NK:
             raise ValueError("Number of elements in tuple must be equal to k")
         
     def __le__(self, other):
-        # compare all of the elements in tuple
         for i in range(NK.k):
             if self.tuples[i] > other.tuples[i]:
                 return False
@@ -27,7 +26,6 @@ class NK:
     def __repr__(self):
         return str(self.tuples)
 
-    # function witch returns the set of minimal elements from subset of NK
     @staticmethod
     def minimal_elements(A):
         M = set()
