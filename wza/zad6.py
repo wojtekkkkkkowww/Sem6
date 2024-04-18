@@ -24,9 +24,20 @@ class NK:
     # function witch returns the set of minimal elements from subset of NK
     @staticmethod
     def minimal_elements(A):
-        pass
+        M = set()
+        for a in A:
+            is_minimal = True
+            for m in M:
+                if a <= m:
+                    is_minimal = False
+                    break
+                if m <= a:
+                    M.remove(m)
 
+            if is_minimal:
+                M.add(a)
 
+        return M
 
 
 # Example usage:
