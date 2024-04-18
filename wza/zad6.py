@@ -21,17 +21,24 @@ class NK:
     def set_k(k):
         NK.k = k
 
+    def __str__(self):
+        return str(self.tuples)
+
+    def __repr__(self):
+        return str(self.tuples)
+
     # function witch returns the set of minimal elements from subset of NK
     @staticmethod
     def minimal_elements(A):
         M = set()
         for a in A:
             is_minimal = True
-            for m in M:
-                if a <= m:
+            M_copy = M.copy()
+            for m in M_copy:
+                if m <= a:
                     is_minimal = False
                     break
-                if m <= a:
+                if a <= m:
                     M.remove(m)
 
             if is_minimal:
@@ -40,10 +47,12 @@ class NK:
         return M
 
 
-# Example usage:
-NK.set_k(3)
-tuple_set1 = NK(1, 2, 3)
-tuple_set2 = NK([1, 2, 3])
-print(tuple_set1 <= tuple_set2) 
-tuple_set3 = NK([1, 2])
+# Test
+if __name__ == "__main__":
+    # {(n.k) e N^2: (n - 10)^2 + (k - 10)^2 <= 25}
+    NK.set_k(2)
+    A = {NK(n, k) for n in range(0, 16) for k in range(0, 16) if (n - 10)**2 + (k - 10)**2 <= 25}
+    M = NK.minimal_elements(A)
 
+    print(f"A = {A}")
+    print(f"M = {M}")
