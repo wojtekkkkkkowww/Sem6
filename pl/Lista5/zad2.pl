@@ -1,5 +1,6 @@
 %drukowane planszy z hetmanami w prolog
 
+% drukowanie : +---+---...
 drukuj_rozdzielacz([]) :-
     write('+'),
     nl.
@@ -7,37 +8,32 @@ drukuj_rozdzielacz([_|T]) :-
     write('+----'),
     drukuj_rozdzielacz(T).
 
-% schodze po weirszach w dol od N do 1
-% w kazdym z weirszy drukuje 4 'pieterka'
-% znam numer wiersza
-% przechodze przez kolumny tam gdzie sie zgadza bede drukowal hetmany
-% mozna zaczac od wydrukwoania pustej planszy
-% drukowanie hetmanow to beda tylko dodatkowe ify
 
-%musze przekazac informacje o parzystosci / nieparzystosci
-
-%drukuj wiersz musi znac numer wiersza
-% no i ta liste
+%drukowanie lini 
 drukuj_pietro([],_,_) :-
     write('|'),
     nl.
-
 
 drukuj_pietro([K|T],P,N):-
     (K =:= N -> (P =:= 0 -> write('| ## ') ; write('|:##:'));(P =:= 0 -> write('|    ') ; write('|::::'))),
     NewP is 1 - P,
     drukuj_pietro(T,NewP,N).
 
+
+
+
 drukuj_wiersz(L,P,N):-
    drukuj_rozdzielacz(L),
    drukuj_pietro(L,P,N),
    drukuj_pietro(L,P,N).
 
-
+% sprawdzanie czy elementy sa z przedzialu 1-N
 valid_elements(_, []).
 valid_elements(N, [H|T]) :-
     between(1, N, H),
     valid_elements(N, T).
+
+
 
 board(X):-
     length(X,N),
@@ -45,7 +41,8 @@ board(X):-
     board(N,X,0).
 
 
-
+% schodze po weirszach w dol od N do 1
+% drukuje wiersz i zmieniam parzystosc P 
 board(0,X,_):-
     drukuj_rozdzielacz(X).
 
