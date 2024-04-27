@@ -41,7 +41,7 @@ read_word(C1,C3,N1,N) :-
     read_word(C2,C3,N2,N).
 
 
-%zamieniam liste atomow na liste tokenow
+%zamienia liste atomow na liste tokenow
 tokenize([], Acc, Acc).
 
 tokenize([H|T], Acc, Result) :-
@@ -51,10 +51,9 @@ tokenize([H|T], Acc, Result) :-
     tokenize(T, NewAcc, Result).
 
 
+%osobno rozpatruje przypadki dla 1 i 2 elementowych separatorow
 
-% osobno definiujemy przypadki dla jedno i dwuznakowych separatorow
-
-%kiedy nic nie przeczytalismy dodajemy tylko rozpoznany separator
+%kiedy nie przeczytano nic wczesniej dodaje tylko rozpoznany separator
 token_from_chars([],[C1,C2|Chars_remaining],[Sep_Token|Tokens]):-
     atom_chars(Sep,[C1,C2]),
     sep(Sep),!,
@@ -83,7 +82,7 @@ token_from_chars(Chars_scanned,[C|Chars_remaining], [Token,Sep_Token|Tokens]) :-
     token_from_chars([],Chars_remaining,Tokens).
     
 
-%kiedy nie rozpoznalismy separatora to dodajemy znak i szukamy dalej
+%kiedy nie znalazl separatora to dodaje znak i szukam dalej
 token_from_chars(Chars_scanned,[C|Chars_remaining], Tokens) :-
     append(Chars_scanned,[C],Chars_scanned_new),
     token_from_chars(Chars_scanned_new,Chars_remaining,Tokens).
