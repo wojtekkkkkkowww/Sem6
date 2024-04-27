@@ -1,31 +1,30 @@
-%drukowane planszy z hetmanami w prolog
 
 % drukowanie : +---+---...
-drukuj_rozdzielacz([]) :-
+print_divider([]) :-
     write('+'),
     nl.
-drukuj_rozdzielacz([_|T]) :-
+print_divider([_|T]) :-
     write('+----'),
-    drukuj_rozdzielacz(T).
+    print_divider(T).
 
 
 %drukowanie lini 
-drukuj_pietro([],_,_) :-
+print_floor([],_,_) :-
     write('|'),
     nl.
 
-drukuj_pietro([K|T],P,N):-
+print_floor([K|T],P,N):-
     (K =:= N -> (P =:= 0 -> write('| ## ') ; write('|:##:'));(P =:= 0 -> write('|    ') ; write('|::::'))),
     NewP is 1 - P,
-    drukuj_pietro(T,NewP,N).
+    print_floor(T,NewP,N).
 
 
 
 
-drukuj_wiersz(L,P,N):-
-   drukuj_rozdzielacz(L),
-   drukuj_pietro(L,P,N),
-   drukuj_pietro(L,P,N).
+print_row(L,P,N):-
+   print_divider(L),
+   print_floor(L,P,N),
+   print_floor(L,P,N).
 
 % sprawdzanie czy elementy sa z przedzialu 1-N
 valid_elements(_, []).
@@ -44,11 +43,11 @@ board(X):-
 % schodze po weirszach w dol od N do 1
 % drukuje wiersz i zmieniam parzystosc P 
 board(0,X,_):-
-    drukuj_rozdzielacz(X).
+    print_divider(X).
 
 board(N,X,P):-
     N > 0,
-    drukuj_wiersz(X,P,N),
+    print_row(X,P,N),
     NewP is 1 - P,
     NewN is N-1,
     board(NewN, X , NewP).
@@ -56,10 +55,7 @@ board(N,X,P):-
 
 
 
-
 % generowanie listy niebijacych hetmanow
-
-
 hetmany(N,P):-
    numlist(1,N,L),
    perm(L,P),

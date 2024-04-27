@@ -1,18 +1,16 @@
 %na stosie trzymam pary (Term,Index)
 
-
 executeCommand(i, [Current | Rest]) :- 
-    nth0(0,Current,Term),
-    Term =.. [_ | [Child | _]],
+    [Term,_] = Current,
+    Term =.. [_,Child | _],
     %pierwsze dziecko ma indeks 1
     append([[Child,1]], [Current | Rest], NewStack),
     readCommand(NewStack).
 
-
 executeCommand(n, [Current, Parent | Rest]) :- 	
-    nth0(0, Parent, ParentTerm),
-    nth0(1,Current, CurrentIndex),
-    ParentTerm =.. X,
+    [ParentTerm,_] = Parent,
+    [_,CurrentIndex] = Current,
+    ParentTerm =.. X, %zamiana termu na liste
     length(X, ParentLength),
     NewIndex is CurrentIndex + 1 ,
     between(1, ParentLength, NewIndex),
@@ -21,9 +19,9 @@ executeCommand(n, [Current, Parent | Rest]) :-
     readCommand(NewStack).
 
 executeCommand(p, [Current, Parent | Rest]) :- 	
-    nth0(0, Parent, ParentTerm),
-    nth0(1,Current, CurrentIndex),
-    ParentTerm =.. X,
+    [ParentTerm,_] = Parent,
+    [_,CurrentIndex] = Current,
+    ParentTerm =.. X, %zamiana termu na liste
     length(X, ParentLength),
     NewIndex is CurrentIndex - 1 ,
     between(1, ParentLength, NewIndex),
@@ -31,13 +29,8 @@ executeCommand(p, [Current, Parent | Rest]) :-
     append([[Sibling,NewIndex]], [Parent | Rest], NewStack),
     readCommand(NewStack).
 
-% wyjscie z programu 
-executeCommand(o, [ _ ]).
 
-executeCommand(o, [_, Parent | Rest]) :- 	
-    nth0(0, Parent, ParentTerm),
-    nth0(1, Parent, ParentIndex),
-    append([[ParentTerm,ParentIndex]], Rest, NewStack),
+executeCommand(o, [_|NewStack]) :- 	
     readCommand(NewStack).
 
 % zawsze mozna zrobic nic poleceniem :)
@@ -46,7 +39,8 @@ executeCommand(_, Stack) :-
 
 readCommand([]).
 readCommand([H | Rest]) :- 	
-    writeln(H),
+    [Term,_] = H,
+    writeln(Term),
     write('command: '),
     read(UserCommand),
     executeCommand(UserCommand, [H | Rest]).
