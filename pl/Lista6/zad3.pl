@@ -11,7 +11,7 @@ s3(L) --> {between(0, L, N),fib(N, F)}, counter(N, a), counter(F, b).
 
 
 fib(N, F) :-
-    fib(N, [0, 1], F).  % '1' to -1 element.
+    fib(N, [0, 1], F).  % 1 to '-1' element.
 
 fib(0, [F|_], F).
 fib(N, [F1, F2|Rest], F) :-
