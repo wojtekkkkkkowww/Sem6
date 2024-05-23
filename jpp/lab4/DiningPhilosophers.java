@@ -47,7 +47,7 @@ class Philosopher extends Thread {
                 rightFork.pickUp();
                 System.out.printf("%d Podnosi prawy \n", id + 1);
 
-                // ...
+                System.out.printf("%d Je %d\n", id + 1, i + 1);
 
                 rightFork.putDown();
                 System.out.printf("%d Odklada prawy \n", id + 1);
