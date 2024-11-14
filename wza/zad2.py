@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+https://repo.cs.pwr.edu.pl/mk1-268486/SP/
 class PolyInterface(ABC):
     @abstractmethod
     def getOne(self):
